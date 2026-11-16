@@ -1,57 +1,58 @@
-# Clase FastAPI
+Trabajo Práctico 1: ABM de Usuarios y Libros con FastAPI
 
-Clase para aprender **FastAPI** y **Pydantic**.
+---
 
-## Crear el entorno virtual (venv)
+Instalación de Dependencias y Ejecución
 
-Desde esta carpeta (`clase-fastapi`):
+1. Crear y activar un entorno virtual:
+   * Windows (PowerShell):
+     ```bash
+     python -m venv .venv
+     .venv\Scripts\Activate.ps1
+     ```
+   * Linux / macOS:
+     ```bash
+     python3 -m venv .venv
+     source .venv/bin/activate
+     ```
 
-```bash
-python3 -m venv .venv
-```
+2. Instalar las dependencias:
+   ```bash
+   pip install "fastapi[standard]"
+   ```
 
-Activar el entorno virtual:
+3. Levantar la aplicación:
+   ```bash
+   fastapi dev main.py
+   ```
+   El servidor local quedará escuchando por defecto en `http://127.0.0.1:8000`.
 
-```bash
-# macOS / Linux
-source .venv/bin/activate
+---
 
-# Windows (PowerShell)
-.venv\Scripts\Activate.ps1
-```
+Acceso a la Documentación Interactiva (Swagger)
 
-## Instalar los requerimientos
+Con el servidor corriendo, abre tu navegador web e ingresa a la siguiente dirección para visualizar y probar todos los endpoints de forma interactiva:
 
-Con el entorno virtual activado:
+http://127.0.0.1:8000/docs
 
-```bash
-pip install -r requirements.txt
-```
+¿Cómo probar los endpoints desde Swagger?
+1. Haz clic sobre cualquiera de las rutas desplegadas (`GET`, `POST`, `PUT`, `DELETE`) para expandirla.
+2. Presiona el botón **"Try it out"** ubicado a la derecha.
+3. Completa los parámetros o el cuerpo JSON requerido (en caso de `POST` o `PUT`).
+4. Haz clic en **"Execute"** para enviar la petición y observar el código de respuesta HTTP y los datos devueltos.
 
-## Ejecutar la aplicación
+---
 
-```bash
-fastapi dev main.py
-```
+Endpoints Implementados
 
-La API quedará disponible en `http://127.0.0.1:8000` y la documentación interactiva en `http://127.0.0.1:8000/docs`.
+Parte 1 — Usuarios (`/user`)
+* **`GET /user`**: Lista todos los usuarios. Permite filtrar por estado mediante el query param opcional `?is_active=true` o `?is_active=false`.
+* **`POST /user`**: Crea un nuevo usuario (`id`, `name`, `is_active`).
+* **`PUT /user/{id}`**: Actualiza los datos de un usuario existente por su ID.
+* **`DELETE /user/{id}`**: Elimina un usuario existente por su ID.
 
-## Lint y chequeo de tipos
-
-El proyecto incluye configuración local para dos herramientas:
-
-- **[`setup.cfg`](./setup.cfg)**: configuración de [`pycodestyle`](https://pycodestyle.pycqa.org/) (chequeo de estilo PEP 8). Define `max-line-length = 79` y excluye `.venv` y `__pycache__` del análisis.
-- **[`pyrightconfig.json`](./pyrightconfig.json)**: configuración de [`pyright`](https://microsoft.github.io/pyright/) (chequeo de tipos). Apunta al entorno virtual local (`.venv`) para resolver las dependencias instaladas y excluye `.venv` y `__pycache__`.
-
-`pyright` ya está incluido en `requirements.txt`. `pycodestyle` no, así que hay que instalarlo aparte.
-
-Con el entorno virtual activado, correr:
-
-```bash
-pip install pycodestyle
-python -m pycodestyle .
-```
-
-```bash
-pyright
-```
+### Parte 2 — Libros (`/libro`)
+* **`GET /libro`**: Lista todos los libros. Permite filtrar por disponibilidad mediante el query param opcional `?disponible=true` o `?disponible=false`.
+* **`POST /libro`**: Registra un nuevo libro (`id`, `titulo`, `autor`, `paginas`, `disponible`).
+* **`PUT /libro/{id}`**: Actualiza los datos de un libro existente por su ID.
+* **`DELETE /libro/{id}`**: Elimina un libro existente por su ID.
